@@ -315,30 +315,12 @@
 
 
 /**
- 设置美颜 亮度
- 
- @param value 亮度 范围0~100
- @return 0:success  非0:failure
- */
-- (int)setBeautyBrightness:(int)value;
-
-
-/**
  设置美颜 红润度
  
  @param value 红润度 范围0~100
  @return 0:success  非0:failure
  */
 - (int)setBeautyRuddy:(int)value;
-
-
-/**
- 设置美颜 饱和度
- 
- @param value 饱和度 范围0~100
- @return 0:success  非0:failure
- */
-- (int)setBeautySaturation:(int)value;
 
 
 /**

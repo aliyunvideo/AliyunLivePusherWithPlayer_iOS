@@ -190,7 +190,7 @@
 
 /**
  美颜 美白参数
- * 默认 : 0
+ * 默认 : 70
  * 范围 : [0,100]
  */
 @property (nonatomic, assign) int beautyWhite;
@@ -198,39 +198,23 @@
 
 /**
  美颜 磨皮参数
- * 默认 : 60
+ * 默认 : 40
  * 范围 : [0,100]
  */
 @property (nonatomic, assign) int beautyBuffing;
 
 
 /**
- 美颜 亮度参数
- * 默认 : 0
- * 范围 : [0,100]
- */
-@property (nonatomic, assign) int beautyBrightness;
-
-
-/**
  美颜 红润参数
- * 默认 : 20
+ * 默认 : 40
  * 范围 : [0,100]
  */
 @property (nonatomic, assign) int beautyRuddy;
 
 
 /**
- 美颜 饱和度参数
- * 默认 : 0
- * 范围 : [0,100]
- */
-@property (nonatomic, assign) int beautySaturation;
-
-
-/**
  美颜 腮红参数
- * 默认 : 0
+ * 默认 : 15
  * 范围 : [0,100]
  */
 @property (nonatomic, assign) int beautyCheekPink;
@@ -238,7 +222,7 @@
 
 /**
  美颜 瘦脸参数
- * 默认 : 0
+ * 默认 : 40
  * 范围 : [0,100]
  */
 @property (nonatomic, assign) int beautyThinFace;
@@ -246,7 +230,7 @@
 
 /**
  美颜 收下巴参数
- * 默认 : 0
+ * 默认 : 50
  * 范围 : [0,100]
  */
 @property (nonatomic, assign) int beautyShortenFace;
@@ -254,7 +238,7 @@
 
 /**
  美颜 大眼参数
- * 默认 : 0
+ * 默认 : 30
  * 范围 : [0,100]
  */
 @property (nonatomic, assign) int beautyBigEye;
