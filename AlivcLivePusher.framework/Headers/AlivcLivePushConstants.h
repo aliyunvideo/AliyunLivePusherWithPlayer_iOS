@@ -50,6 +50,42 @@ typedef NS_ENUM(NSInteger, AlivcLivePushResolution){
     AlivcLivePushResolution720P,
 };
 
+/**
+Image format
+ */
+typedef NS_ENUM(NSInteger, AlivcLivePushVideoFormat){
+    AlivcLivePushVideoFormatUnknown   = -1,
+    AlivcLivePushVideoFormatBGR       = 0,
+    AlivcLivePushVideoFormatRGB,
+    AlivcLivePushVideoFormatARGB,
+    AlivcLivePushVideoFormatBGRA,
+    AlivcLivePushVideoFormatRGBA,
+    AlivcLivePushVideoFormatYUV420P,
+    AlivcLivePushVideoFormatYUVYV12,
+    AlivcLivePushVideoFormatYUVNV21,
+    AlivcLivePushVideoFormatYUVNV12,
+    AlivcLivePushVideoFormatYUVJ420P,
+    AlivcLivePushVideoFormatYUVJ420SP,
+    AlivcLivePushVideoFormatYUVJ444P,
+    AlivcLivePushVideoFormatYUV444P,
+};
+
+
+/**
+ sound format
+ */
+typedef NS_ENUM(NSInteger, AlivcLivePushAudioFormat){
+    AlivcLivePushAudioFormatUnknown   = -1,
+    AlivcLivePushAudioFormatU8       = 0,
+    AlivcLivePushAudioFormatS16,
+    AlivcLivePushAudioFormatS32,
+    AlivcLivePushAudioFormatF32,
+    AlivcLivePushAudioFormatU8P,
+    AlivcLivePushAudioFormatS16P,
+    AlivcLivePushAudioFormatS32P,
+    AlivcLivePushAudioFormatF32P,
+};
+
 
 /**
  推流模式
@@ -126,6 +162,17 @@ typedef NS_ENUM(NSInteger, AlivcLivePushVideoEncoderMode){
     AlivcLivePushVideoEncoderModeSoft,
 };
 
+/**
+ 音频编码模式
+ 
+ - AlivcLivePushAudioEncoderModeHard: 硬编码
+ - AlivcLivePushAudioEncoderModeSoft: 软编码
+ */
+typedef NS_ENUM(NSInteger, AlivcLivePushAudioEncoderMode){
+    AlivcLivePushAudioEncoderModeHard = 0,
+    AlivcLivePushAudioEncoderModeSoft,
+};
+
 
 /**
  音频编码格式
@@ -151,6 +198,7 @@ typedef NS_ENUM(NSInteger, AlivcLivePushAudioEncoderProfile){
 typedef NS_ENUM(NSInteger, AlivcLivePushAudioSampleRate){
     AlivcLivePushAudioSampleRate32000 = 32000,
     AlivcLivePushAudioSampleRate44100 = 44100,
+    AlivcLivePushAudioSampleRate48000 = 48000,
 };
 
 

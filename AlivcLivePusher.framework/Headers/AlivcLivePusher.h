@@ -7,16 +7,23 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <VideoToolbox/VideoToolbox.h>
 #import <UIKit/UIKit.h>
+#import <ReplayKit/ReplayKit.h>
 #import "AlivcLivePushConfig.h"
 #import "AlivcLivePushStatsInfo.h"
 #import "AlivcLivePushError.h"
 
 
 /**
- 错误回调, 网络回调, 状态回调
+ 错误回调, 网络回调, 状态回调, BGM回调, 滤镜回调
  */
-@protocol AlivcLivePusherErrorDelegate, AlivcLivePusherNetworkDelegate, AlivcLivePusherInfoDelegate, AlivcLivePusherBGMDelegate;
+@protocol AlivcLivePusherErrorDelegate,
+AlivcLivePusherNetworkDelegate,
+AlivcLivePusherInfoDelegate,
+AlivcLivePusherBGMDelegate,
+AlivcLivePusherCustomFilterDelegate,
+AlivcLivePusherCustomDetectorDelegate;
 
 
 
@@ -73,6 +80,20 @@
  */
 - (void)setNetworkDelegate:(id<AlivcLivePusherNetworkDelegate>)delegate;
 
+/**
+ 设置用户自定义滤镜回调
+ 
+ @param delegate AlivcLivePusherCustomFilterDelegate
+ */
+- (void)setCustomFilterDelegate:(id<AlivcLivePusherCustomFilterDelegate>)delegate;
+
+
+/**
+ 设置用户自定义人脸识别回调
+ 
+ @param delegate AlivcLivePusherCustomDetectorDelegate
+ */
+- (void)setCustomDetectorDelegate:(id<AlivcLivePusherCustomDetectorDelegate>)delegate;
 
 /**
  设置背景音乐监听回调
@@ -386,7 +407,6 @@
 - (int)setMinVideoBitrate:(int)minBitrate;
 
 
-
 /* ***********************背景音乐*********************** */
 
 /**
@@ -469,6 +489,61 @@
 /* ****************************************************** */
 
 
+/* ***********************外部数据*********************** */
+
+/**
+ 发送自定义video SampleBuffer
+ 只限于replaykit 录屏直播使用
+ 
+ @param sampleBuffer video sample buffer
+ */
+- (void)sendVideoSampleBuffer:(CMSampleBufferRef)sampleBuffer;
+
+/**
+ 发送自定义的audio SampleBuffer
+ 只限于replaykit录屏直播使用
+ 
+ @param sampleBuffer audio sample buffer
+ @param sampleBufferType audio sample buffer type
+ */
+- (void)sendAudioSampleBuffer:(CMSampleBufferRef)sampleBuffer withType:(RPSampleBufferType)sampleBufferType;
+
+/**
+ 发送自定义视频数据
+ 
+ @param data 视频数据
+ @param width 视频宽度
+ @param height 视频高度
+ @param size 数据大小
+ @param pts 时间戳（单位微秒）
+ @param rotation 旋转
+ */
+- (void)sendVideoData:(char *)data width:(int)width height:(int)height size:(int)size pts:(uint64_t)pts rotation:(int)rotation;
+
+/**
+ 发送自定义音频数据
+ 
+ @param data 音频数据
+ @param size 数据大小
+ @param pts 时间戳（单位微秒）
+ */
+- (void)sendPCMData:(char *)data size:(int)size pts:(uint64_t)pts;
+
+
+/* ****************************************************** */
+
+/**
+ 设置Message
+ 
+ @param msg 用户推流消息
+ @param count 重复次数
+ @param time 延时时间，单位毫秒
+ @param isKeyFrame 是否只发关键帧
+ @return 0:success  非0:failure
+ */
+- (int)sendMessage:(NSString *)msg repeatCount:(int)count delayTime:(int)time KeyFrameOnly:(bool)isKeyFrame;
+
+
 /**
  获取是否正在推流
 
@@ -508,6 +583,23 @@
  @return 版本号
  */
 - (NSString *)getSDKVersion;
+
+/**
+  添加动态贴纸
+  waterMarkDirPath：贴纸图片sequence目录
+  x,y：显示屏幕位置（0~1.0f)
+  w,h：显示屏幕长宽（0~1.0f)
+ 
+  @return 返回动态贴纸的id号，删除贴纸传此id
+ **/
+- (int)addDynamicWaterMarkImageDataWithPath:(NSString *)waterMarkDirPath x:(float)x y:(float)y w:(float)w h: (float)h;
+
+/**
+ 删除动态贴纸
+ vid:贴纸id，add时返回的
+ 
+ **/
+- (void)removeDynamicWaterMark:(int)vid;
 
 @end
 
@@ -598,6 +690,24 @@
  @param pusher 推流AlivcLivePusher
  */
 - (void)onSendDataTimeout:(AlivcLivePusher *)pusher;
+
+
+/**
+ 推流URL的鉴权时长即将过期(将在过期前1min内发送此回调)
+
+ @param pusher 推流AlivcLivePusher
+ @return 新的推流URL
+ */
+- (NSString *)onPushURLAuthenticationOverdue:(AlivcLivePusher *)pusher;
+
+
+/**
+ 发送SEI Message 通知
+ 
+ @param pusher 推流AlivcLivePusher
+ */
+- (void)onSendSeiMessage:(AlivcLivePusher *)pusher;
+
 
 @end
 
@@ -740,5 +850,50 @@
  */
 - (void)onDownloadTimeout:(AlivcLivePusher *)pusher;
 
+
+@end
+@protocol AlivcLivePusherCustomFilterDelegate <NSObject>
+@required
+/**
+ 通知外置滤镜创建回调
+ */
+- (void)onCreate:(AlivcLivePusher *)pusher context:(void*)context;
+/**
+ 通知外置滤镜设置参数
+ */
+- (void)updateParam:(AlivcLivePusher *)pusher buffing:(float)buffing whiten:(float)whiten pink:(float)pink cheekpink:(float)cheekpink thinface:(float)thinface shortenface:(float)shortenface bigeye:(float)bigeye;
+/**
+ 通知外置滤镜开馆
+ */
+- (void)switchOn:(AlivcLivePusher *)pusher on:(bool)on;
+/**
+ 通知外置滤镜处理回调
+ */
+- (int)onProcess:(AlivcLivePusher *)pusher texture:(int)texture textureWidth:(int)width textureHeight:(int)height extra:(long)extra;
+
+/**
+ 通知外置滤镜销毁回调
+ */
+- (void)onDestory:(AlivcLivePusher *)pusher;
+
+@end
+
+@protocol AlivcLivePusherCustomDetectorDelegate <NSObject>
+
+@required
+/**
+ 通知外置识别器创建回调
+ */
+- (void)onCreateDetector:(AlivcLivePusher *)pusher;
+
+/**
+ 通知外置识别器处理回调
+ */
+- (long)onDetectorProcess:(AlivcLivePusher *)pusher data:(long)data w:(int)w h:(int)h rotation:(int)rotation format:(int)format extra:(long)extra;
+
+/**
+ 通知外置识别器销毁回调
+ */
+- (void)onDestoryDetector:(AlivcLivePusher *)pusher;
 
 @end

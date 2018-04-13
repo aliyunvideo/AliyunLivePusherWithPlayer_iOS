@@ -33,6 +33,21 @@
 
 
 /**
+ 是否打开码率自适应
+ * 默认 : true
+ */
+@property (nonatomic, assign) bool enableAutoBitrate;
+
+
+/**
+ 是否打开分辨率自适应 (动态分辨率)
+ * 默认 : true
+ * 注 : qualityMode在custom模式下，分辨率自适应无效
+ */
+@property (nonatomic, assign) bool enableAutoResolution;
+
+
+/**
  视频采集帧率
  * 默认 : AlivcLivePushFPS20
  * 单位 : Frames per Second
@@ -182,6 +197,18 @@
 
 
 /**
+ 暂停推流图片
+ */
+@property(nonatomic, retain) UIImage *pauseImg;
+
+
+/**
+ 码率低图片
+ */
+@property(nonatomic, retain) UIImage *networkPoorImg;
+
+
+/**
  美颜模式
  * 默认 : AlivcLivePushBeautyModeProfessional 普通模式
  */
@@ -265,6 +292,31 @@
  */
 @property (nonatomic, assign) AlivcLivePushAudioEncoderProfile audioEncoderProfile;
 
+
+/**
+ 音频编码模式
+ * 默认 : AlivcLivePushAudioEncoderModeHard
+ */
+@property (nonatomic, assign) AlivcLivePushAudioEncoderMode audioEncoderMode;
+
+
+/**
+ 是否外部自定义数据推流
+ * 默认 : false
+ */
+@property (nonatomic, assign) bool externMainStream;
+
+/**
+ 外部自定义视频数据
+ * 默认 : unknown
+ */
+@property (nonatomic, assign) AlivcLivePushVideoFormat externVideoFormat;
+
+/**
+ 外部自定义音频数据
+ * 默认 : unknown
+ */
+@property (nonatomic, assign) AlivcLivePushAudioFormat externAudioFormat;
 
 
 /**
