@@ -318,6 +318,12 @@
  */
 @property (nonatomic, assign) AlivcLivePushAudioFormat externAudioFormat;
 
+/**
+ 预览显示模式
+ * 默认 : fit
+ */
+@property (nonatomic, assign) AlivcPusherPreviewDisplayMode previewDisplayMode;
+
 
 /**
  init 分辨率 其余值为默认值

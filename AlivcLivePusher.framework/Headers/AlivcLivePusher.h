@@ -406,6 +406,13 @@ AlivcLivePusherCustomDetectorDelegate;
  */
 - (int)setMinVideoBitrate:(int)minBitrate;
 
+/**
+ 设置预览显示模式
+
+ @param displayMode 预览显示模式
+ */
+- (void)setpreviewDisplayMode:(AlivcPusherPreviewDisplayMode)displayMode;
+
 
 /* ***********************背景音乐*********************** */
 
@@ -493,8 +500,7 @@ AlivcLivePusherCustomDetectorDelegate;
 
 /**
  发送自定义video SampleBuffer
- 只限于replaykit 录屏直播使用
- 
+
  @param sampleBuffer video sample buffer
  */
 - (void)sendVideoSampleBuffer:(CMSampleBufferRef)sampleBuffer;
@@ -559,6 +565,12 @@ AlivcLivePusherCustomDetectorDelegate;
  */
 - (NSString *)getPushURL;
 
+/**
+ 获取当前推流状态
+ 
+ @return 推流状态
+ */
+- (AlivcLivePushStatus)getLiveStatus;
 
 /**
  获取推流数据统计
