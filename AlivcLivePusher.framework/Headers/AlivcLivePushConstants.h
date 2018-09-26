@@ -71,6 +71,7 @@ typedef NS_ENUM(NSInteger, AlivcLivePushStatus){
  - AlivcLivePushResolution480P: 480P
  - AlivcLivePushResolution540P: 540P
  - AlivcLivePushResolution720P: 720P
+ - AlivcLivePushResolutionPassThrough: pass through only used for external main video stream
  */
 typedef NS_ENUM(NSInteger, AlivcLivePushResolution){
     AlivcLivePushResolution180P = 0,
@@ -79,6 +80,7 @@ typedef NS_ENUM(NSInteger, AlivcLivePushResolution){
     AlivcLivePushResolution480P,
     AlivcLivePushResolution540P,
     AlivcLivePushResolution720P,
+    AlivcLivePushResolutionPassThrough,
 };
 
 /**
@@ -227,6 +229,7 @@ typedef NS_ENUM(NSInteger, AlivcLivePushAudioEncoderProfile){
  - AlivcLivePushAudioSample32000: 32000Hz
  */
 typedef NS_ENUM(NSInteger, AlivcLivePushAudioSampleRate){
+    AlivcLivePushAudioSampleRate16000 = 16000,
     AlivcLivePushAudioSampleRate32000 = 32000,
     AlivcLivePushAudioSampleRate44100 = 44100,
     AlivcLivePushAudioSampleRate48000 = 48000,

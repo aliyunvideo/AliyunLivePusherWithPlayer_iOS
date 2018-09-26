@@ -264,7 +264,7 @@ AlivcLivePusherCustomDetectorDelegate;
  
  @return 当前变焦值
  */
-- (int)getCurrentZoom;
+- (float)getCurrentZoom;
 
 
 /**
@@ -414,6 +414,15 @@ AlivcLivePusherCustomDetectorDelegate;
 - (void)setpreviewDisplayMode:(AlivcPusherPreviewDisplayMode)displayMode;
 
 
+/**
+ 设置推流分辨率，只在预览模式下生效，推流中不能设置
+ 
+ @param resolution 推流分辨率
+ */
+- (void)setResolution:(AlivcLivePushResolution)resolution;
+
+
+
 /* ***********************背景音乐*********************** */
 
 /**
@@ -531,10 +540,51 @@ AlivcLivePusherCustomDetectorDelegate;
  
  @param data 音频数据
  @param size 数据大小
+ @param sampleRate 采样率
+ @param channel 声道数
  @param pts 时间戳（单位微秒）
  */
-- (void)sendPCMData:(char *)data size:(int)size pts:(uint64_t)pts;
+- (void)sendPCMData:(char *)data size:(int)size sampleRate:(int)sampleRate channel:(int)channel pts:(uint64_t)pts;
 
+/**
+ 添加视频混流设置
+ */
+- (int)addMixVideo:(int)format width:(int)width height:(int)height rotation:(int)rotation displayX:(float)displayX displayY:(float)displayY displayW:(float)displayW displayH:(float)displayH;
+
+/**
+ 改变视频混流位置
+ */
+- (void)changeMixVideoPosition:(int)handler displayX:(float)displayX displayY:(float)displayY displayW:(float)displayW displayH:(float)displayH;
+
+/**
+ 改变视频混流镜像
+ */
+- (void)setMixVideoMirror:(int)handler isMirror:(BOOL)isMirror;
+
+/**
+ 输入视频混流数据
+ */
+- (void)inputMixVideoData:(int)handler data:(long)dataptr width:(int)width height:(int)height stride:(int)stride size:(int)size pts:(long)pts rotation:(int)rotation;
+
+/**
+ 移除视频混流
+ */
+- (void)removeMixVideo:(int) handler;
+
+/**
+ 添加音频混流设置
+ */
+- (int)addMixAudio:(int)channels format:(int)format audioSample:(int)audioSample;
+
+/**
+ 输入音频混流数据
+ */
+- (bool)inputMixAudioData:(int)handler data:(long)dataptr size:(int)size pts:(long)pts;
+
+/**
+ 移除音频混流
+ */
+- (void)removeMixAudio:(int)handler;
 
 /* ****************************************************** */
 
@@ -597,7 +647,7 @@ AlivcLivePusherCustomDetectorDelegate;
 - (NSString *)getSDKVersion;
 
 /**
-  添加动态贴纸
+  添加动态贴纸,最多支持添加5个贴纸
   waterMarkDirPath：贴纸图片sequence目录
   x,y：显示屏幕位置（0~1.0f)
   w,h：显示屏幕长宽（0~1.0f)

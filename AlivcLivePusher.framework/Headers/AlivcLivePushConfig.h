@@ -140,6 +140,14 @@
 
 
 /**
+ 网络发送数据超时
+ * 默认 : 3000
+ * 单位 : ms
+ */
+@property (nonatomic, assign) int sendDataTimeout;
+
+
+/**
  推流方向 : 竖屏、90度横屏、270度横屏
  * 默认 : AlivcLivePushOrientationPortrait
  */
@@ -323,6 +331,19 @@
  * 默认 : fit
  */
 @property (nonatomic, assign) AlivcPusherPreviewDisplayMode previewDisplayMode;
+
+/**
+ 开启 openGL Shared Context 模式
+ * 默认 : false
+ */
+@property (nonatomic, assign) BOOL requireGLSharedContext;
+
+
+/**
+ 业务信息
+ */
+
+@property (nonatomic, copy) NSDictionary *businessInfo;
 
 
 /**
