@@ -41,7 +41,7 @@
 
 /**
  是否打开分辨率自适应 (动态分辨率)
- * 默认 : true
+ * 默认 : false
  * 注 : qualityMode在custom模式下，分辨率自适应无效
  */
 @property (nonatomic, assign) bool enableAutoResolution;
@@ -109,7 +109,7 @@
 
 /**
  声道数
- * 默认 : AlivcLivePushAudioChannel_2 单声道
+ * 默认 : AlivcLivePushAudioChannel_2 双声道
  */
 @property (nonatomic, assign) AlivcLivePushAudioChannel audioChannel;
 
@@ -303,7 +303,7 @@
 
 /**
  音频编码模式
- * 默认 : AlivcLivePushAudioEncoderModeHard
+ * 默认 : AlivcLivePushAudioEncoderModeSoft
  */
 @property (nonatomic, assign) AlivcLivePushAudioEncoderMode audioEncoderMode;
 
@@ -367,6 +367,13 @@
              watermarkCoordX:(CGFloat)coordX
              watermarkCoordY:(CGFloat)coordY
               watermarkWidth:(CGFloat)width;
+
+/**
+ 移除水印
+ 
+ @param path 水印路径
+ */
+- (void)removeWatermarkWithPath:(NSString *)path;
 
 
 /**

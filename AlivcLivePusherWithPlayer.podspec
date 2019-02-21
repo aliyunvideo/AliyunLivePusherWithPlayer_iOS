@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "AlivcLivePusherWithPlayer"
-  s.version      = "3.3.7"
+  s.version      = "3.4.0"
   s.summary      = "AlivcLivePusherWithPlayer_iOS"
   s.description  = <<-DESC
                    It's an SDK for aliyun video vodplay, which implement by Objective-C.

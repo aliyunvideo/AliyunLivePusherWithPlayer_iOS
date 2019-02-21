@@ -23,7 +23,8 @@ AlivcLivePusherNetworkDelegate,
 AlivcLivePusherInfoDelegate,
 AlivcLivePusherBGMDelegate,
 AlivcLivePusherCustomFilterDelegate,
-AlivcLivePusherCustomDetectorDelegate;
+AlivcLivePusherCustomDetectorDelegate,
+AlivcLivePusherSnapshotDelegate;
 
 
 
@@ -169,6 +170,12 @@ AlivcLivePusherCustomDetectorDelegate;
  */
 - (int)reconnectPushAsync;
 
+/**
+ 重连 异步接口
+ 
+ @return 0:success  非0:failure
+ */
+- (int)reconnectPushAsync:(NSString *)pushURL;
 
 /**
  销毁推流
@@ -279,10 +286,32 @@ AlivcLivePusherCustomDetectorDelegate;
 /**
  设置曝光度
  
- @param value 曝光度
+ @param exposure 曝光度
  @return 0:success  非0:failure
  */
-- (int)setExposureValue:(float)value;
+- (int)setExposure:(float)exposure;
+
+
+/**
+ 获取当前曝光度
+ 
+ @return  曝光度
+ */
+- (float)getCurrentExposure;
+
+/**
+ 获取支持最小曝光度
+ 
+ @return  最小曝光度
+ */
+- (float)getSupportedMinExposure;
+
+/**
+ 获取支持最大曝光度
+ 
+ @return  最大曝光度
+ */
+- (float)getSupportedMaxExposure;
 
 
 /**
@@ -334,7 +363,6 @@ AlivcLivePusherCustomDetectorDelegate;
  */
 - (int)setBeautyBuffing:(int)value;
 
-
 /**
  设置美颜 红润度
  
@@ -343,38 +371,35 @@ AlivcLivePusherCustomDetectorDelegate;
  */
 - (int)setBeautyRuddy:(int)value;
 
-
 /**
- 设置美颜 瘦脸程度
-
- @param value 瘦脸度 范围 0~100
+ 设置美颜 腮红度
+ 
+ @param value 腮红度 范围 0~100
  @return 0:success  非0:failure
  */
 - (int)setBeautyCheekPink:(int)value;
 
 
 /**
- 设置美颜 收下巴程度
+ 设置美颜 瘦脸程度
  
- @param value 腮红度 范围 0~100
+ @param value 瘦脸程度 范围 0~100
  @return 0:success  非0:failure
  */
 - (int)setBeautyThinFace:(int)value;
 
-
 /**
- 设置美颜 大眼程度
+ 设置美颜 收下巴程度
  
- @param value 腮红度 范围 0~100
+ @param value 收下巴程度 范围 0~100
  @return 0:success  非0:failure
  */
 - (int)setBeautyShortenFace:(int)value;
 
-
 /**
- 设置美颜 腮红度
+ 设置美颜 大眼程度
  
- @param value 腮红度 范围 0~100
+ @param value 大眼程度 范围 0~100
  @return 0:success  非0:failure
  */
 - (int)setBeautyBigEye:(int)value;
@@ -549,7 +574,7 @@ AlivcLivePusherCustomDetectorDelegate;
 /**
  添加视频混流设置
  */
-- (int)addMixVideo:(int)format width:(int)width height:(int)height rotation:(int)rotation displayX:(float)displayX displayY:(float)displayY displayW:(float)displayW displayH:(float)displayH;
+- (int)addMixVideo:(int)format width:(int)width height:(int)height rotation:(int)rotation displayX:(float)displayX displayY:(float)displayY displayW:(float)displayW displayH:(float)displayH adjustHeight:(bool)adjustHeight;
 
 /**
  改变视频混流位置
@@ -663,6 +688,18 @@ AlivcLivePusherCustomDetectorDelegate;
  **/
 - (void)removeDynamicWaterMark:(int)vid;
 
+/**
+ 截图
+ count:张数
+ interval:每张间隔(ms)
+ **/
+- (void)snapshot:(int)count interval:(int)interval;
+
+
+/**
+ 设置截图回调
+ **/
+- (void)setSnapshotDelegate:(id<AlivcLivePusherSnapshotDelegate>)delegate;
 @end
 
 
@@ -736,6 +773,13 @@ AlivcLivePusherCustomDetectorDelegate;
  */
 - (void)onReconnectSuccess:(AlivcLivePusher *)pusher;
 
+/**
+ 连接被断开
+ 
+ @param pusher 推流AlivcLivePusher
+ */
+- (void)onConnectionLost:(AlivcLivePusher *)pusher;
+
 
 /**
  重连失败回调
@@ -769,6 +813,15 @@ AlivcLivePusherCustomDetectorDelegate;
  @param pusher 推流AlivcLivePusher
  */
 - (void)onSendSeiMessage:(AlivcLivePusher *)pusher;
+
+@optional
+
+/**
+ 网络原因导致音视频丢包
+ 
+ @param pusher 推流AlivcLivePusher
+ */
+- (void)onPacketsLost:(AlivcLivePusher *)pusher;
 
 
 @end
@@ -814,7 +867,7 @@ AlivcLivePusherCustomDetectorDelegate;
  
  @param pusher 推流AlivcLivePusher
  */
-- (void)onPushPauesed:(AlivcLivePusher *)pusher;
+- (void)onPushPaused:(AlivcLivePusher *)pusher;
 
 
 /**
@@ -958,4 +1011,18 @@ AlivcLivePusherCustomDetectorDelegate;
  */
 - (void)onDestoryDetector:(AlivcLivePusher *)pusher;
 
+@end
+
+@protocol AlivcLivePusherSnapshotDelegate <NSObject>
+
+@required
+
+/**
+ 截图回调
+ 
+ @param pusher 推流AlivcLivePusher
+ @param image 截图
+ @param error error
+ */
+- (void)onSnapshot:(AlivcLivePusher *)pusher image:(UIImage *)image;
 @end
