@@ -663,6 +663,13 @@ AlivcLivePusherSnapshotDelegate;
  */
 - (int)setLogLevel:(AlivcLivePushLogLevel)level;
 
+/**
+ 设置Log路径
+
+ @param logPath Log路径
+ @return 0:success  非0:failure
+ */
+- (int)setLogPath:(NSString *)logPath;
 
 /**
  获取SDK版本号

@@ -219,7 +219,7 @@ typedef NS_ENUM(NSInteger, AlivcLivePushAudioEncoderProfile){
     AlivcLivePushAudioEncoderProfile_AAC_LC = 2,
     AlivcLivePushAudioEncoderProfile_HE_AAC = 5,
     AlivcLivePushAudioEncoderProfile_HE_AAC_V2 = 29,
-    AlivcLivePushAudioEncoderProfile_AAC_LD = 29,
+    AlivcLivePushAudioEncoderProfile_AAC_LD = 23,
 };
 
 
@@ -287,6 +287,7 @@ typedef NS_ENUM(NSInteger, AlivcPusherErrorCode){
     ALIVC_LIVE_PUSHER_PARAM_ERROR       = -2, // 接口调用传入参数错误
     ALIVC_LIVE_PUSHER_UNKNOW_ERROR      = -3, // 接口调用未知错误
     ALIVC_LIVE_PUSHER_SEQUENCE_ERROR    = -4, // 接口调用顺序错误
+    ALIVC_LIVE_PUSHER_RTC_NOT_SUPPORT_AUDIO_OR_VIDEOONLY_PUSH = -5, //rtc协议暂不支持纯音频或纯视频推流
 };
 
 /**

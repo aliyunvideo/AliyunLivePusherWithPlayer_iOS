@@ -76,6 +76,16 @@
  */
 @property (nonatomic, assign) int audioFramesInEncodeBuffer;
 
+/**
+ 设置的音频编码模式
+ * 0:硬编  1:软编
+ */
+@property (nonatomic, assign) int audioEncoderMode;
+
+/**
+ 设置的音频声道数
+ */
+@property (nonatomic, assign) int channel;
 
 
 #pragma mark - video render
@@ -354,5 +364,30 @@
  推流队列最近一次发送时间戳
  */
 @property (nonatomic, assign) int lastUploadedSendTime;
+
+/**
+ 网络往返延时（ms）
+ */
+@property (nonatomic, assign) int rtt;
+
+/**
+ 视频丢包率（%）
+ */
+@property (nonatomic, assign) int videoLostRate;
+
+/**
+ 音频丢包率（%）
+ */
+@property (nonatomic, assign) int audioLostRate;
+
+/**
+视频重传码率（kbps）
+*/
+@property (nonatomic, assign) int videoReSendBitRate;
+
+/**
+音频重传码率（kbps）
+*/
+@property (nonatomic, assign) int audioReSendBitRate;
 
 @end

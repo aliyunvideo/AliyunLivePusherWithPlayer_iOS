@@ -102,7 +102,7 @@
 
 /**
  音频采样率
- * 默认 : AlivcLivePushAudioSampleRate32000
+ * 默认 : AlivcLivePushAudioSampleRate48000
  */
 @property (nonatomic, assign) AlivcLivePushAudioSampleRate audioSampleRate;
 
@@ -176,7 +176,7 @@
 
 
 /**
- 纯音频推流
+ 纯音频推流，只有RTMP推流才支持纯音频推流，当前RTC不支持纯音频推流
  * 默认 : false
  * 注 : 与 videoOnly互斥
  */
@@ -184,7 +184,7 @@
 
 
 /**
- 纯视频推流
+ 纯视频推流，只有RTMP推流才支持纯视频推流，当前RTC不支持纯视频推流
  * 默认 : false
  * 注 : 与 audioOnly互斥
  */
